@@ -121,6 +121,35 @@
 	because when I tried to run RStudio there was a missing library error. 
 	Re-installing seemed a reasonable solution, the package installed was rstudio-desktop-bin-2022.07.1.554-2 and \texttt{rstudio-desktop} was removed in the process.
 	
+	On November 16, 2022, RStudio was broken again after installing big update.
+	This time I tried to solve the missing library by addressing the missing shared
+	libraries libcrypto.so.1.1  and libssl.so.1.1 required by an older version of openssl.
+	\href{https://stackoverflow.com/a/72366805/1585486}{libssl.so.1.1 canot open shared object SO question}
+	
+	\begin{tiny}
+	\begin{verbatim}
+		> if(!require(yaml, quietly = TRUE)) { options(Ncpus = 2 );
+		    install.packages('yaml',
+			                  lib='/var/tmp/pamac-build-pablo/rstudio-desktop/src/rstudio-2022.07.2-576/dependencies/R', repos='https://cran.rstudio.com/') }
+		cmake: error while loading shared libraries: libssl.so.1.1: cannot open shared object file: No such file or directory
+		==> ERROR: A failure occurred in build().
+		Aborting...
+	\end{verbatim}
+	\end{tiny}
+
+
+	I retried the yay installation, whch conerts the debian package.
+	
+	
+	Again this installs a working version of RStudio. My take is that after updates the ersio of the
+	openssl required libraries get removed in favor of more recent ones. 
+	
+	\begin{figure}[!htb]
+	\centering
+	\caption{RStudio 2022.07.2 Build 576 istalled o Nov. 16, 2022 via Yay.}
+	\includegraphics[width=0.45\textwidth]{Images/RStudioSplashWindowNov-16-2022.png}
+	\end{figure}
+	
 	\section{Yay}
 	\label{sec:yay}
 	
