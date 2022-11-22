@@ -138,17 +138,66 @@
 	\end{tiny}
 
 
-	I retried the yay installation, whch conerts the debian package.
+	I retried the yay installation, which uses the debian package.
 	
 	
-	Again this installs a working version of RStudio. My take is that after updates the ersio of the
-	openssl required libraries get removed in favor of more recent ones. 
+	Again this installs a working version of RStudio. My take is that after updates the version of the
+	openssl required libraries get removed in favour of more recent ones. 
 	
 	\begin{figure}[!htb]
 	\centering
 	\caption{RStudio 2022.07.2 Build 576 istalled o Nov. 16, 2022 via Yay.}
 	\includegraphics[width=0.45\textwidth]{Images/RStudioSplashWindowNov-16-2022.png}
 	\end{figure}
+	
+	
+	On November 22, 2022 there was no RStudio to be found when running either the kernel
+	version 5.15.78-1 or the previous 5.10.136
+	
+	\begin{small}
+		\begin{verbatim}
+			[pablo@pablo-p170em ~]$ uname -srm
+			Linux 5.15.78-1-MANJARO x86_64
+		\end{verbatim}
+	\end{small}
+	
+	When running the Yay installation command I saw:
+	
+	\begin{small}
+		\begin{verbatim}
+			[pablo@pablo-p170em ~]$ yay -S rstudio-desktop-bin
+			:: Checking for conflicts...
+			:: Checking for inner conflicts...
+			[Aur:1]  rstudio-desktop-bin-2022.07.2.576-1
+			
+			1 rstudio-desktop-bin                      (Build Files Exist)
+			...
+			==> Making package: rstudio-desktop-bin 2022.07.2.576-1 (Tue 22 Nov 2022 07:05:52 AM)
+			==> Checking runtime dependencies...
+			==> Checking buildtime dependencies...
+			==> Retrieving sources...
+			-> Found rstudio-2022.07.2-576-amd64.deb
+			==> Validating source_x86_64 files with sha256sums...
+			rstudio-2022.07.2-576-amd64.deb ... Passed
+			==> Removing existing $srcdir/ directory...
+			==> Extracting sources...
+			-> Extracting rstudio-2022.07.2-576-amd64.deb with bsdtar
+			==> Sources are ready.
+			...
+			==> Leaving fakeroot environment.
+			==> Finished making: rstudio-desktop-bin 2022.07.2.576-1 (Tue 22 Nov 2022 07:06:16 AM)
+			==> Cleaning up...
+			error: could not set install reason for package rstudio-desktop-bin 
+			(could not find or read package)
+		\end{verbatim}
+	\end{small}
+	
+	So, what had succeeded a few days ago now fails!
+	
+	I arrived at Bryan Jenks YouTube channel where I followed the \href{https://www.youtube.com/watch?v=FhvEJxrzABI}{AUR pakage installation
+	video}. Then I installed it via the \href{https://www.youtube.com/watch?v=XAId0j7RR0c}{RStudio for Arh Linux video}.
+	
+	The build part takes a while.
 	
 	\section{Yay}
 	\label{sec:yay}
