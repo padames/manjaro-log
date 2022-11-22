@@ -197,7 +197,59 @@
 	I arrived at Bryan Jenks YouTube channel where I followed the \href{https://www.youtube.com/watch?v=FhvEJxrzABI}{AUR pakage installation
 	video}. Then I installed it via the \href{https://www.youtube.com/watch?v=XAId0j7RR0c}{RStudio for Arh Linux video}.
 	
-	The build part takes a while.
+	The build part takes over 2 hours on the Sager laptop. It may potentially fail if there are incompatible dependencies at the 
+	system level that cannot be resolved by the package manager AUR.
+	
+	The installation finished without errors:
+	
+	\begin{small}
+		\begin{verbatim}
+			(1/1) installing rstudio-desktop             [################################]100%
+			Optional dependencies for rstudio-desktop
+			git: for git support [installed]
+			subversion: for subversion support
+			openssh-askpass: for a git ssh access
+			quarto: for Quarto projects support
+			:: Running post-transaction hooks...
+			(1/4) Arming ConditionNeedsUpdate...
+			(2/4) Updating the MIME type database...
+			(3/4) Updating icon theme caches...
+			(4/4) Updating the desktop file MIME type cache...
+		\end{verbatim}
+	\end{small}
+	
+	
+	Created the script \texttt{rstudio} under \textasciitilde$\backslash$.local$\backslash$bin$\backslash$tools, with the following content:
+	
+	\begin{small}
+		\begin{verbatim}
+			#!/usr/bin/env sh
+			
+			#open RStudio desktop from the command line
+			
+			/usr/bin/rstudio-bin & disown
+			
+			PPPID=$(awk '{print $4}' "/proc/$PPID/stat")
+			kill $PPPID
+			
+		\end{verbatim}
+	\end{small}
+	
+	Just clicking on the RStudio link o the task bar worked well. However the Quarto CLI component
+	has a message that it needs update.
+	
+	Ran a \texttt{install.packages("quarto")} followed by package updates:
+	
+	\begin{tiny}
+		\begin{verbatim}
+			install.packages(c("bit", "evaluate", "knitr", "learnr", "markdown", "pkgload", "R.utils", "rmarkdown", "sass", "styler", "vctrs", "xfun"))
+		\end{verbatim}
+	\end{tiny}
+	
+	After all this, the quarto version is 1.2, however the message at start up still asks for a minimum of 0.9.2, I thik I will ignore it for now.
+	I ran out of time today but a full test would be to knitr a document.
+	 
+	
 	
 	\section{Yay}
 	\label{sec:yay}
