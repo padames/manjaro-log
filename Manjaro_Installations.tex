@@ -75,7 +75,7 @@
 	\end{verbatim}
 	
 	This is a deceivingly namesake of the real RStudio. It is a utility to manage the file system.
-	Apparently there is no easy way to install RSTudio in Manjaro.
+	Apparently there is no easy way to install RStudio in Manjaro.
 	
 	So I removed it from the Manjaro Software utility.
 	
@@ -98,7 +98,7 @@
 		\includegraphics[width=0.45\textwidth]{Images/ErrorInstallingAUR.png}
 	\end{figure}
 	
-	In my final attempt of the night I succeeded follwing the \textit{yay} route as described in \href{https://archived.forum.manjaro.org/t/using-the-statistical-package-r-in-manjaro-with-rstudio/484}{Manjaro Forum on RStudio-archived}. 
+	In my final attempt of the night I succeeded following the \textit{yay} route as described in \href{https://archived.forum.manjaro.org/t/using-the-statistical-package-r-in-manjaro-with-rstudio/484}{Manjaro Forum on RStudio-archived}. 
 	It came down to doing a single command line:
 	\begin{verbatim}
 		yay -S rstudio-desktop-bin
@@ -146,7 +146,7 @@
 	
 	\begin{figure}[!htb]
 	\centering
-	\caption{RStudio 2022.07.2 Build 576 istalled o Nov. 16, 2022 via Yay.}
+	\caption{RStudio 2022.07.2 Build 576 installed o Nov. 16, 2022 via Yay.}
 	\includegraphics[width=0.45\textwidth]{Images/RStudioSplashWindowNov-16-2022.png}
 	\end{figure}
 	
@@ -246,9 +246,237 @@
 		\end{verbatim}
 	\end{tiny}
 	
-	After all this, the quarto version is 1.2, however the message at start up still asks for a minimum of 0.9.2, I thik I will ignore it for now.
+	After all this, the quarto version is 1.2, however the message at start up still asks for a minimum of 0.9.2, I think I will ignore it for now.
 	I ran out of time today but a full test would be to knitr a document.
 	 
+	
+	\subsection{Quarto installation}
+	
+	On December 13, 2022 I addressed a meesage on the RStudio IDE telling to update the Quarto component.
+	I followed the link suggested by the message: \href{https://quarto.org/docs/download/tarball.html?version=1.2.269&idPrefix=download}{quarto}.
+	
+	I unpacked the package to the local folder \textasciitilde$\backslash$.local$\backslash$opt 
+	and made the symlink to \textasciitilde$\backslash$.local$\backslash$bin$\backslash$quarto
+	
+	
+	\subsection{Updating RStudio}
+	
+	On Dec 17, 2020 I observed the following message in the Package Manager:
+	
+	\begin{figure}[!htb]
+		\centering
+		\caption{Behind RStudio 2022.07.2 Build 576.}
+		\includegraphics[width=0.45\textwidth]{Images/RStudio-failing-update-throughPckMngr.png}
+	\end{figure}
+	
+	An indeed I am on an older version:
+	\begin{tiny}
+		\begin{verbatim}
+			RStudio 2022.07.2+576 "Spotted Wakerobin" Release (e7373ef, 2022-11-22) for x86_64 GNU/Linux
+			Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) QtWebEngine/5.15.11 Chrome/87.0.4280.144 Safari/537.36
+		\end{verbatim}
+	\end{tiny}
+	
+	That is the version that got installed from the Arch repo.
+	
+	After viewing the videos by Brian Jenks again I realized that I installed an older version, 2022.07.2.576-1. So I looked for the  more recent version from another AUR repo because these are
+	publicly maintained, \href{https://aur.archlinux.org/packages/rstudio-desktop}{rstudio-desktop}.
+	
+	So, step one I removed the existing version with:
+	
+	\begin{small}
+		\begin{verbatim}
+			sudo pacman -Rns rstudio-desktop	
+		\end{verbatim}
+	\end{small}
+	
+	
+	The removed the directory manually.
+	The next step is to clone the AUR git repo and do a makepkg in the folder.
+	
+	But when trying to build it there were unmet dependencies:
+	
+	\begin{tiny}
+		\begin{verbatim}
+			[pablo@pablo-p170em rstudio-desktop]$ makepkg -si
+			==> Making package: rstudio-desktop 2022.12.0.353-1 (Sat 17 Dec 2022 07:57:15 PM)
+			==> Checking runtime dependencies...
+			==> Installing missing dependencies...
+			[sudo] password for pablo: 
+			error: target not found: soci
+			==> ERROR: 'pacman' failed to install missing dependencies.
+			==> Missing dependencies:
+			-> qt5-sensors
+			-> qt5-xmlpatterns
+			-> postgresql-libs
+			-> soci
+			-> mathjax2
+			-> pandoc
+			-> yaml-cpp
+			==> Checking buildtime dependencies...
+			==> ERROR: Could not resolve all dependencies.
+		\end{verbatim}
+	\end{tiny}
+	
+	On Dec 18 I did a refresh of yay with
+	\begin{small}
+		\begin{verbatim}
+			sudo pacman -S --needed git base-devel yay	
+	    \end{verbatim}
+	\end{small}
+	yay-git was removed and then the update above went away (?). Got the same error after cloning and running 
+	\begin{verbatim}
+		makepkg -si
+	\end{verbatim}
+	
+	So the best path now is to try to resolve the missing dependencies.
+	
+	Executing:
+	
+	\begin{small}
+		\begin{verbatim}
+			pamac install qt5-sensors
+			pamac install qt5-xmlpatterns
+			pamac install postgresql-libs
+			pamac install mathjax2
+			pamac install pandoc
+			pamac install yaml-cpp
+		\end{verbatim}
+	\end{small}
+	
+	For soci, the C++ compliant Object Database Library interface, I followed the download and build from source istructions in \href{https://soci.sourceforge.net/doc/master/installation/}{soci}.
+	
+	Basically cloning with 
+	
+	\begin{tiny}
+		\begin{verbatim}
+			 $ git clone https://github.com/SOCI/soci.git
+			 $ cd soci
+			 $ mkdir build && cd build
+			 $ cmake -G ``Unix Makefiles'' -DWITH\_BOOST=OFF -DWITH\_ORACLE=OFF  \~{}/Programs/soci/
+			 ...
+			 -- Configuring SOCI: 
+			 -- SOCI\_VERSION                             = 4.1.0 
+			 -- SOCI\_ABI\_VERSION                         = 4.1 
+			 -- SOCI\_SHARED                              = ON 
+			 -- SOCI\_STATIC                              = ON 
+			 -- SOCI\_TESTS                               = ON 
+			 -- SOCI\_ASAN                                = OFF 
+			 -- LIB\_SUFFIX                               = 64 
+			 ...
+			 -- MySQL: 
+			 -- Performing Test HAVE_MYSQL_OPT_EMBEDDED_CONNECTION
+			 -- Performing Test HAVE_MYSQL_OPT_EMBEDDED_CONNECTION - Failed
+			 -- MySQL not found.
+			 -- MySQL Embedded not found.
+			 -- WARNING: MySQL libraries not found, some features will be disabled. 
+			 -- ODBC: 
+			 -- ODBC_INCLUDE_DIR                         = /usr/include 
+			 -- ODBC_LIBRARIES                           = /usr/lib/libodbc.so 
+			 -- Oracle: disabled, since WITH_ORACLE=OFF 
+			 -- PostgreSQL: 
+			 -- POSTGRESQL_INCLUDE_DIRS                  = /usr/include 
+			 -- POSTGRESQL_LIBRARIES                     = /usr/lib/libpq.so 
+			 -- POSTGRESQL_VERSION                       = 14.6 
+			 -- SQLite3: 
+			 -- SQLITE3_INCLUDE_DIR                      = /usr/include 
+			 -- SQLITE3_LIBRARIES                        = /usr/lib/libsqlite3.so 
+			 ...
+			 -- PostgreSQL - SOCI backend for PostgreSQL 
+			 -- SOCI_POSTGRESQL                          = ON 
+			 -- SOCI_POSTGRESQL_TARGET                   = soci_postgresql 
+			 -- SOCI_POSTGRESQL_OUTPUT_NAME              = soci_postgresql 
+			 -- SOCI_POSTGRESQL_COMPILE_DEFINITIONS      = SOCI_ABI_VERSION="4.1" HAVE_DL=1 
+			 -- SOCI_POSTGRESQL_INCLUDE_DIRECTORIES      = /home/pablo/Programs/soci/build /home/pablo/Programs/soci/include /home/pablo/Programs/soci/build/include /home/pablo/Programs/soci/include/private /home/pablo/Programs/soci/include/private /usr/include /usr/include 
+			 -- SOCI_POSTGRESQL_NOSINLGEROWMODE          =  
+			 ...
+			 -- Configuring done
+			 -- Generating done
+			 -- Build files have been written to: /home/pablo/Programs/soci/build
+			 $ make
+			 ...
+			 [  0%] Building CXX object src/core/CMakeFiles/soci_core.dir/backend-loader.cpp.o
+			 [  1%] Building CXX object src/core/CMakeFiles/soci_core.dir/blob.cpp.o
+			 [  1%] Building CXX object src/core/CMakeFiles/soci_core.dir/common.cpp.o
+			 ...
+			 [ 94%] Linking CXX executable ../../bin/soci_odbc_test_postgresql
+			 [ 94%] Built target soci_odbc_test_postgresql
+			 [ 95%] Building CXX object tests/odbc/CMakeFiles/soci_odbc_test_postgresql_static.dir/test-odbc-postgresql.cpp.o
+			 [ 95%] Linking CXX executable ../../bin/soci_odbc_test_postgresql_static
+			 [ 95%] Built target soci_odbc_test_postgresql_static
+			 [ 95%] Building CXX object tests/postgresql/CMakeFiles/soci_postgresql_test.dir/test-postgresql.cpp.o
+			 [ 96%] Linking CXX executable ../../bin/soci_postgresql_test
+			 [ 96%] Built target soci_postgresql_test
+			 [ 97%] Building CXX object tests/postgresql/CMakeFiles/soci_postgresql_test_static.dir/test-postgresql.cpp.o
+			 [ 97%] Linking CXX executable ../../bin/soci_postgresql_test_static
+			 [ 97%] Built target soci_postgresql_test_static
+			 [ 98%] Building CXX object tests/sqlite3/CMakeFiles/soci_sqlite3_test.dir/test-sqlite3.cpp.o
+			 [ 98%] Linking CXX executable ../../bin/soci_sqlite3_test
+			 [ 98%] Built target soci_sqlite3_test
+			 [ 99%] Building CXX object tests/sqlite3/CMakeFiles/soci_sqlite3_test_static.dir/test-sqlite3.cpp.o
+			 [100%] Linking CXX executable ../../bin/soci_sqlite3_test_static
+			 [100%] Built target soci_sqlite3_test_static
+			 $ sudo make install
+			 [ 14%] Built target soci_core
+			 [ 28%] Built target soci_core_static
+			 [ 35%] Built target soci_empty
+			 [ 42%] Built target soci_empty_static
+			 [ 49%] Built target soci_odbc
+			 [ 55%] Built target soci_odbc_static
+			 [ 63%] Built target soci_postgresql
+			 [ 70%] Built target soci_postgresql_static
+			 ...
+			 -- Set runtime path of "/usr/local/lib/libsoci_odbc.so.4.1.0" to ""
+			 -- Installing: /usr/local/lib/libsoci_odbc.so
+			 -- Installing: /usr/local/lib/libsoci_odbc.a
+			 -- Installing: /usr/local/include/soci/postgresql/soci-postgresql.h
+			 -- Installing: /usr/local/lib/libsoci_postgresql.so.4.1.0
+			 -- Installing: /usr/local/lib/libsoci_postgresql.so.4.1
+			 -- Set runtime path of "/usr/local/lib/libsoci_postgresql.so.4.1.0" to ""
+			 -- Installing: /usr/local/lib/libsoci_postgresql.so
+			 -- Installing: /usr/local/lib/libsoci_postgresql.a
+			 -- Installing: /usr/local/include/soci/sqlite3/soci-sqlite3.h
+			 -- Installing: /usr/local/lib/libsoci_sqlite3.so.4.1.0
+			 -- Installing: /usr/local/lib/libsoci_sqlite3.so.4.1
+			 -- Set runtime path of "/usr/local/lib/libsoci_sqlite3.so.4.1.0" to ""
+			 -- Installing: /usr/local/lib/libsoci_sqlite3.so
+			 -- Installing: /usr/local/lib/libsoci_sqlite3.a
+		\end{verbatim}
+	\end{tiny} 
+	
+	I removed the dependency on soci manually from the PKGBUILD file because installig soci the way I did does<not install a system package but only libraries under |/usr/local/lb|.
+	
+	I had to add the following to the cmake section of he PKGBUILD file to use C++17 and avoid some errors I saw while compiling with default values.
+	
+	\begin{tiny}
+		\begin{verbatim}
+			-DCMAKE_CXX_STANDARD=17 \
+			-DCMAKE_CXX_STANDARD_REQUIRED=ON \
+			-DCMAKE_CXX_EXTENSIONS=OFF \
+		\end{verbatim}
+	\end{tiny}
+	
+	The build failed because I don't have headers for openssl, in particular the declaration of the function
+	
+	\begin{tiny}
+		\begin{verbatim}
+			src/node-v16.14.0-linux-x64/include/node/openssl/evp.h:996:int EVP_PKEY_size(const EVP_PKEY *pkey);
+			
+		\end{verbatim}
+	\end{tiny}
+	
+	The function is defined in the openssl file \verb|crypto/evp/p_lib.c| that I foud in the source code I clones by
+	
+	\begin{small}
+		\begin{verbatim}
+			git clone git://git.openssl.org/openssl.git
+		\end{verbatim}
+	\end{small}
+	
+	Eve after this I stop now at 53\% build with no obvious compiler errors while linking object file \verb|src/cpp/desktop/CMakeFiles/rstudio.dir/qrc_desktop.cpp.o|
+	
+	This is too much work to install a more recent RStudio  my opinion. It has been fun but very hard and no result to show.
+	
 	
 	
 	\section{Yay}
