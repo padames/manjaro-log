@@ -478,6 +478,40 @@
 	This is too much work to install a more recent RStudio  my opinion. It has been fun but very hard and no result to show.
 	
 	
+	Going back to investigate to the AUR web page for rstudio I found that the soci dependency is on an AUR package called \texttt{soci-git}. 
+	This is different from the source that I installed straight from git but generic for any linux system.
+	
+	\begin{scriptsize}
+		\begin{verbatim}
+			1. git clone https://aur.archlinux.org/soci-git.git
+			2. cd soci-git
+			3. vim PKGBUILD
+			4. makepkg -si
+			
+		\end{verbatim}
+	\end{scriptsize}
+
+	It fails making the package:
+	
+	\begin{tiny}
+		\begin{verbatim}
+			 52%] Building CXX object src/cpp/desktop/CMakeFiles/rstudio.dir/synctex/evince/moc_EvinceWindow.cpp.o
+			[ 52%] Building CXX object src/cpp/desktop/CMakeFiles/rstudio.dir/qrc_desktop.cpp.o
+			[ 52%] Linking CXX executable rstudio
+			make[2]: Leaving directory '/home/pablo/Programs/rstudio-desktop/src/build'
+			[ 58%] Built target rstudio
+			make[1]: Leaving directory '/home/pablo/Programs/rstudio-desktop/src/build'
+			make: *** [Makefile:156: all] Error 2
+			make: Leaving directory '/home/pablo/Programs/rstudio-desktop/src/build'
+			==> ERROR: A failure occurred in package().
+			Aborting...
+			
+		\end{verbatim}
+	\end{tiny}
+	
+	I am giving up for this weekend on RStudio for Manjaro
+	
+	
 	
 	\section{Yay}
 	\label{sec:yay}
