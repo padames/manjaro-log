@@ -631,6 +631,34 @@
 		\includegraphics[width=0.8\textwidth]{Images/DropBoxSetUp.png}
 	\end{figure}
 	
-	
+\section{\TeX{}Live}
+
+To install \TeX{}Live I followed the following steps:
+
+\begin{compactenum}
+	\item cloned the AUR git repo: \href{https://aur.archlinux.org/packages/texlive-full}{AUR-TeXLive}
+	\item cd into the cloned project and run \texttt{makepkg} (see \href{https://wiki.archlinux.org/title/Makepkg}{Makepkg documentation})
+	\item run \texttt{makepkg --install}
+	\item entered password to complete the installation (if one leaves the lengthy installation unattended it may time out while waiting for the user password)
+\end{compactenum}
+
+
+\section{\TeX{}Studio}
+
+Simply ran \texttt{sudo pamac install texstudio} at the command line.
+See more information in the Manjaro page  \href{https://software.manjaro.org/package/texstudio}{\TeX{}Studio Manjaro}.
+
+
+\section{Calibre}
+
+Followed the download and installation instructions in \href{https://calibre-ebook.com/download_linux}{Calibre}.
+
+\begin{footnotesize}
+	\begin{verbatim}
+		sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
+	\end{verbatim}
+\end{footnotesize}
+
+
 	
 \end{document}
