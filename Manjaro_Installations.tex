@@ -7,6 +7,9 @@
 \usepackage{paralist}
 \usepackage{microtype}
 
+\usepackage{xcolor}
+
+
 \setlength{\parindent}{0em}
 \setlength{\parskip}{1ex}
 
@@ -30,6 +33,47 @@ The dual boot continues to be handled well by the boot loader.
 sudo pacman -Syyu
 sudo pacman -S base-devel
 \end{verbatim}
+
+
+\section{GPU}
+\label{sec:gpu}
+
+I want to run ONNX, Torch and TensorFlow format deep learning models in my Manjaro laptop using the installed NVIDIA GPU.
+
+\begin{list}{\color{teal}\clubsuit}{\color{olive}}
+	\item Get the GPU model with \color{black}\texttt{lspci -vnn | grep VGA}. \color{olive} In my case I got \color{black} NVIDIA Corporation GF114M [GeForce GTX 675M]\color{olive} 
+	\item Then downloaded the driver \color{black} NVIDIA-Linux-x86\_64-470.256.02.run \color{olive} as recommended by the NVIDIA website for drivers. However its installation geve a message explaining this driver will be ingnored because the gpu requires the driver \color{black}390.xx legacy.\color{olive}
+	\item Dowloaded the recommended driver from \href{https://www.nvidia.com/en-us/drivers/unix/}{NVIDIA-drivers} \color{black} Latest Legacy GPU version (390.xx series): \href{https://www.nvidia.com/Download/driverResults.aspx/196213/en-us/}{390.157} \color{olive} 
+\end{list}
+
+
+While  installing the driver I got the error:
+
+\begin{verbatim}
+-> The file '/tmp/.X0-lock' exists and appears to contain the process ID '1256'
+ of a runnning X server.
+ERROR: You appear to be running an X server; please exit X before installing
+\end{verbatim}
+
+I removed the current driver:
+\begin{verbatim}
+	sudo mhwd -r pci video-hybrid-intel-nvidia-390xx-bumblebee
+\end{verbatim}
+
+Because I had checked that this was installed with the command:
+\begin{verbatim}
+mhwd -li
+> Installed PCI configs:
+--------------------------------------------------------------------------------
+NAME               VERSION          FREEDRIVER           TYPE
+--------------------------------------------------------------------------------
+video-hybrid-intel-nvidia-390xx-bumblebee            2023.03.23               false            PCI	
+\end{verbatim}
+
+Now I have to disable the restart in desktop level (6) but instead in leve 3 to a terminal to install the drive without X runnnig.
+
+
+
 
 \section{R}
 
@@ -126,9 +170,50 @@ Re-installing seemed a reasonable solution, the package installed was rstudio-de
 
 Followed directions from \href{https://www.tecmint.com/install-yay-aur-helper-in-arch-linux-and-manjaro/}{Installing Yay}
 
+
+On April 14, 2024 one of the updates from AUR was for \texttt{yay-git}. It failed to update due to a shared library conflict with pacma. 
+
+I read about installing \texttt{yay} in binary form from the \href{https://github.com/Jguer/yay?tab=readme-ov-file#other-distributions}{Manjaro distro} from the same \texttt{yay-git} Github website, so I tried it.
+
+The command I ran was:
+
+\begin{verbatim}
+	sudo pacman -S --needed git base-devel yay
+\end{verbatim}
+
+This not only removed the \texttt{yay-git} that could not get updated but also re-installed \texttt{yay-12.3.0-1}.
+
+
 \section{AUR}
 
 Enabled AUR in the Add/Remove Software to have access to the Arch Liux packages in Manjaro as suggested \href{https://forum.manjaro.org/t/dropbox-install-new-to-manjaro/9576/5}{here} while searching for a recipe to install Dropbox.
+
+
+In general one should be aware that Manjaro is not associated with the community-driven AUR repository.
+\href{https://wiki.manjaro.org/index.php?title=Arch_User_Repository}{The Arch User Rrepository} is a statement that supports this.
+
+Installed the Github CLI for git package from \href{https://aur.archlinux.org/packages/github-cli-git}{GitHub-cli-git}.
+After building the AUR package with \texttt{pamac build github-cli-git} I registered the package with Github by running \texttt{gh aut login}. The image~\ref{fig:github-auth-login} shows the prompts and optios given.
+
+\begin{figure}[!htb]
+	\centering
+	\caption{Registering the GitHub CLI for git.}
+	\includegraphics[width=0.85\textwidth]{Images/gh-auth-login.png}
+	\label{fig:github-auth-login}
+\end{figure}
+
+
+Steps to cloning rustlings from my GitHub fork.
+\begin{enumerate}
+	\item \texttt{gh repo clone padames/rustlings}
+	\item \texttt{cd rustlings}
+	\item \texttt{cargo install --force --path .}
+\end{enumerate}
+
+These steps are for a manual installation (mostly from \href{https://github.com/padames/rustlings?tab=readme-ov-file#manually}{Rustligns}).
+
+After these steps running \texttt{rustlings watch} at the commannd line allowed me to contiue working where I left off.
+
 
 \section{Date}
 
