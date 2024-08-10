@@ -72,8 +72,16 @@ video-hybrid-intel-nvidia-390xx-bumblebee            2023.03.23               fa
 
 Now I have to disable the restart in desktop level (6) but instead in leve 3 to a terminal to install the drive without X runnnig.
 
+\textbf{Aug 10, 2024} Removing the driver and not installing any in between as done in the previous steps caused the system to boot to a blank screen without mouse.
+ In order to get a tereminal and troubleshoot the problem, I pressed any key while showing the grub menu (dual boot options from separate HDD in my case). Then I pressed the letter \texttt{E} on the keyboard. On the text file displayed I edited the one that has the linux term in it and removed everything after the word \texttt{quiet} including it, and replaced it with \texttt{3} for user level 3 or terminal.
+Pressing \texttt{ESC} after that makes the booting process continue but land in a terminal with full access to my system as my user. 
 
+I did a general system update with \texttt{sudo pacman -Syyu}, see \href{https://forum.manjaro.org/t/the-correct-way-to-update/28235/2}{the-correct-way-to-update}.
+Then I installed the best GPU driver with: \texttt{ sudo mhwd -a pci nonfree 0300}, from  \href{https://wiki.manjaro.org/index.php/Configure_Graphics_Cards}{how-to-configure-graphics-cards}
 
+I continued to see error after attempting  to start the X11 server by running the command \texttt{startx}. The log file is written to /home/pablo/.local/share/xorg/Xorg.0.log.
+The last error was related to the shared library file \texttt{i965\_dri.so} being missing and thus AIGLX failing to work properly.
+This anwser in \href{https://www.reddit.com/r/archlinux/comments/woa8bv/usrlibdrii965_driso_is_missing/}{Reddit-missing-libi965\_dri} solved it, so I installed  the dependency with \texttt{sudo pacman -Fy i965\_dri}
 
 \section{R}
 
