@@ -1,0 +1,30 @@
+{
+    "InternalPDFViewer": {
+        "Embedded": true,
+        "File": "../../Documents/LaTeX Documents/Log/Manjaro_Installations.pdf"
+    },
+    "Session": {
+        "Bookmarks": [
+            {
+                "bookmarkNumber": 1,
+                "fileName": "../../Documents/LaTeX Documents/cv_10/C:/Users/pablo/Documents/LaTeX Documents/cv_10/cv_Pablo_Adames_Dec2014.tex",
+                "lineNumber": 209,
+                "text": "cv_Pablo_Adames_Dec2014.tex\n{Calfrac Well Services }"
+            }
+        ],
+        "CurrentFile": "Manjaro_Installations.tex",
+        "FileVersion": 1,
+        "Files": [
+            {
+                "Col": 0,
+                "EditorGroup": 0,
+                "FileName": "Manjaro_Installations.tex",
+                "FirstLine": 0,
+                "FoldedLines": "",
+                "Line": 0
+            }
+        ],
+        "MasterFile": "../../Documents/LaTeX Documents/Log/Manjaro_Installations.tex",
+        "VerticalSplit": false
+    }
+}

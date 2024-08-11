@@ -7,6 +7,9 @@
 \usepackage{paralist}
 \usepackage{microtype}
 
+\usepackage{caption}
+\usepackage{subcaption}
+
 \usepackage{xcolor}
 
 
@@ -73,8 +76,28 @@ video-hybrid-intel-nvidia-390xx-bumblebee            2023.03.23               fa
 Now I have to disable the restart in desktop level (6) but instead in leve 3 to a terminal to install the drive without X runnnig.
 
 \textbf{Aug 10, 2024} Removing the driver and not installing any in between as done in the previous steps caused the system to boot to a blank screen without mouse.
- In order to get a tereminal and troubleshoot the problem, I pressed any key while showing the grub menu (dual boot options from separate HDD in my case). Then I pressed the letter \texttt{E} on the keyboard. On the text file displayed I edited the one that has the linux term in it and removed everything after the word \texttt{quiet} including it, and replaced it with \texttt{3} for user level 3 or terminal.
+I got stuck trying to stop the X server before installiong the NVIDIA driver.
+
+ In order to get to a text terminal to troubleshoot the problem, I pressed any key while showing the grub menu (dual boot options from separate HDD in my case). Then I pressed the letter \texttt{E} on the keyboard. On the text file displayed I edited the one that has the linux term in it and removed everything after the word \texttt{quiet} including it, and replaced it with \texttt{3} for user level 3 or terminal, see Figure~\ref{fig:grubscript}.
 Pressing \texttt{ESC} after that makes the booting process continue but land in a terminal with full access to my system as my user. 
+
+\begin{figure}[!htb]
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=1.0\linewidth]{Images/GRUB_file_Aug_10_2024.jpeg}
+		\caption{The GRUB script}
+		\label{fig:grubLeft}
+	\end{subfigure}%
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=.8\linewidth]{Images/GRUB_file_Aug_10_2024_B.jpeg}
+		\caption{Right side of the screen shoing the GRB menu}
+		\label{fig:grubRight}
+	\end{subfigure}
+	\caption{The GRUB screen showing the commands used to configure the GRUB. The change was made in the line that starts with \texttt{linux}, at the point after the words \texttt{rw quiet}. They were replaced by \texttt{rw 3} and everything else to the right was removed.}
+	\label{fig:grubscript}
+\end{figure}
+
 
 I did a general system update with \texttt{sudo pacman -Syyu}, see \href{https://forum.manjaro.org/t/the-correct-way-to-update/28235/2}{the-correct-way-to-update}.
 Then I installed the best GPU driver with: \texttt{ sudo mhwd -a pci nonfree 0300}, from  \href{https://wiki.manjaro.org/index.php/Configure_Graphics_Cards}{how-to-configure-graphics-cards}
@@ -82,6 +105,13 @@ Then I installed the best GPU driver with: \texttt{ sudo mhwd -a pci nonfree 030
 I continued to see error after attempting  to start the X11 server by running the command \texttt{startx}. The log file is written to /home/pablo/.local/share/xorg/Xorg.0.log.
 The last error was related to the shared library file \texttt{i965\_dri.so} being missing and thus AIGLX failing to work properly.
 This anwser in \href{https://www.reddit.com/r/archlinux/comments/woa8bv/usrlibdrii965_driso_is_missing/}{Reddit-missing-libi965\_dri} solved it, so I installed  the dependency with \texttt{sudo pacman -Fy i965\_dri}
+
+
+\textbf{Note}: This left me with a restore graphical desktop but I made no progress trying to run the NVIDIA driver to do inference. Running the command \texttt{mhwd -li} shows the same driver.
+
+
+The one lesson I learned from this is that Ctl + Alt + F3 takes me to a login terminal session while Ctl + Alt + F7 brings me back to the X11 server desktop. 
+
 
 \section{R}
 
