@@ -25,9 +25,9 @@
 \maketitle
 
 \begin{abstract}
-Reinstalled Manjaro 21.2 on /dev/sdb following Manjaro Forum recommendations.
-Windows continues installed on /dev/sda.
-The dual boot continues to be handled well by the boot loader.
+I reinstalled Manjaro 21.2 on /dev/sdb following Manjaro Forum recommendations.
+Windows continues to be installed on /dev/sda.
+The boot loader continues to handle the dual boot well.
 \end{abstract}
 
 \section{Development tools}
@@ -41,7 +41,7 @@ sudo pacman -S base-devel
 \section{GPU}
 \label{sec:gpu}
 
-I want to run ONNX, Torch and TensorFlow format deep learning models in my Manjaro laptop using the installed NVIDIA GPU.
+I want to run ONNX, Torch and TensorFlow format deep learning models on my Manjaro laptop. I want to use the NVIDIA GPU currently installed on it.
 
 \begin{list}{\color{teal}$\clubsuit$}{\color{olive}}
 	\item Get the GPU model with \color{black}\texttt{lspci -vnn | grep VGA}. \color{olive} In my case I got \color{black} NVIDIA Corporation GF114M \lbrack{}GeForce GTX 675M\rbrack{}\color{olive} 
