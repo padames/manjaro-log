@@ -73,7 +73,7 @@ NAME               VERSION          FREEDRIVER           TYPE
 video-hybrid-intel-nvidia-390xx-bumblebee            2023.03.23               false            PCI	
 \end{verbatim}
 
-Now I have to disable the restart in desktop level (6) but instead in leve 3 to a terminal to install the drive without X runnnig.
+Now I have to disable the restart in desktop level (6) but instead in level 3 to a terminal to install the drive without X running.
 
 \textbf{Aug 10, 2024} Removing the driver and not installing any in between as done in the previous steps caused the system to boot to a blank screen without a mouse.
 I got stuck trying to stop the X server before installing the NVIDIA driver.
@@ -94,7 +94,7 @@ Pressing \texttt{ESC} after that makes the booting process continue but land in 
 		\caption{Right side of the screen showing the GRUB menu}
 		\label{fig:grubRight}
 	\end{subfigure}
-	\caption{The GRUB screen showing the commands used to configure the GRUB. The change was made in the line that starts with \texttt{linux}, at the point after the words \texttt{rw quiet}. They were replaced by \texttt{rw 3} and everything else to the right was removed.}
+	\caption{The GRUB screen showing the configuration script. The change was made in the line that starts with \texttt{linux}, at the point after the words \texttt{rw quiet}. They were replaced by \texttt{rw 3} and everything else to the right was removed.}
 	\label{fig:grubscript}
 \end{figure}
 
@@ -156,8 +156,8 @@ Starting from home:
 	makepkg -si	
 \end{verbatim}
 
-This is a deceivingly namesake of the real RStudio. It is a utility to manage the file system.
-Apparently there is no easy way to install RSTudio in Manjaro.
+This is a deceivingly namesake of the real RStudio. It is a utility manager for the file system.
+Apparently, there is no easy way to install RSTudio in Manjaro.
 
 So I removed it from the Manjaro Software utility.
 
@@ -201,7 +201,7 @@ On October 12, 2022, I had to re-install RStudio with
 \end{verbatim}
 
 because when I tried to run RStudio there was a missing library error. 
-Re-installing seemed a reasonable solution, the package installed was rstudio-desktop-bin-2022.07.1.554-2 and \texttt{rstudio-desktop} was removed in the process.
+Re-installing seemed a reasonable solution, the package installed was rstudio-desktop-bin-2022.07.1.554-2 and \texttt{rstudio-desktop} was removed by its installation.
 
 \section{Yay}
 \label{sec:yay}
@@ -209,7 +209,7 @@ Re-installing seemed a reasonable solution, the package installed was rstudio-de
 Followed directions from \href{https://www.tecmint.com/install-yay-aur-helper-in-arch-linux-and-manjaro/}{Installing Yay}
 
 
-On April 14, 2024, one of the updates from AUR was for \texttt{yay-git}. It failed to update due to a shared library conflict with pacma. 
+On April 14, 2024, one of the updates from AUR was for \texttt{yay-git}. It failed to update due to a shared library conflict with Pacman. 
 
 I read about installing \texttt{yay} in binary form from the \href{https://github.com/Jguer/yay?tab=readme-ov-file#other-distributions}{Manjaro distro} from the same \texttt{yay-git} Github website, so I tried it.
 
@@ -219,7 +219,7 @@ The command I ran was:
 	sudo pacman -S --needed git base-devel yay
 \end{verbatim}
 
-This not only removed the \texttt{yay-git} that could not get updated but also re-installed \texttt{yay-12.3.0-1}.
+This removed the \texttt{yay-git} that had not been updated and re-installed \texttt{yay-12.3.0-1}.
 
 
 \section{AUR}
@@ -230,7 +230,7 @@ Enabled AUR in the Add/Remove Software to have access to the Arch Liux packages 
 In general, one should be aware that Manjaro is not associated with the community-driven AUR repository.
 \href{https://wiki.manjaro.org/index.php?title=Arch_User_Repository}{The Arch User Rrepository} is a statement that supports this.
 
-Installed the Github CLI for git package from \href{https://aur.archlinux.org/packages/github-cli-git}{GitHub-cli-git}.
+I installed the GitHub CLI for the git package from \href{https://aur.archlinux.org/packages/github-cli-git}{GitHub-cli-git}.
 After building the AUR package with \texttt{pamac build github-cli-git} I registered the package with Github by running \texttt{gh aut login}. The image~\ref{fig:github-auth-login} shows the prompts and options given.
 
 \begin{figure}[!htb]
@@ -306,9 +306,9 @@ This fixed my time zone issue today! Check with the command \texttt{date}.
 
 \section{Dropbox}
 
-Followed the \href{https://forum.manjaro.org/t/dropbox-install-new-to-manjaro/9576/5}{page in Manaro Forum}.
+I followed the \href{https://forum.manjaro.org/t/dropbox-install-new-to-manjaro/9576/5}{page in Manaro Forum}.
 
-First attempt here failed:
+The first attempt here failed:
 \begin{small}
 \begin{verbatim}
 	  -> Downloading dropbox-lnx.x86_64-139.4.4896.tar.gz...
@@ -352,17 +352,17 @@ First attempt here failed:
 \end{verbatim}
 \end{small}
 
-Second attempt was not what I expected because the installed program only opened a link to the Dropbox webpage.
-The I followed the download and build instructions from \href{https://help.dropbox.com/installs-integrations/desktop/linux-commands}{here}. 
-Then linked it to my free account which allows only three devices.
+The second attempt had an unexpected result because the installed program only opened a link to the Dropbox web page.
+Then I followed the download and build instructions from \href{https://help.dropbox.com/installs-integrations/desktop/linux-commands}{here}. 
+Then I linked it to my free account which allows only three devices.
 
 \begin{figure}[!htb]
 	\centering
-	\caption{Connecting Dropbox client with server in the cloud. Removed the old reference to the previous Manjaro installation.}
+	\caption{Connecting Dropbox client with the server in the cloud. Removed the old reference to the previous Manjaro installation.}
 	\includegraphics[width=0.8\textwidth]{Images/DropBoxSetUp.png}
 \end{figure}
 
-\section{\TeX{}Live}
+\section[TeXLive]{\TeX{}Live}
 
  To install \TeX{}Live I followed the following steps:
  
@@ -376,13 +376,13 @@ Then linked it to my free account which allows only three devices.
 
 \section{\TeX{}Studio}
 
-Simply ran \texttt{sudo pamac install texstudio} at the command line.
+I ran \texttt{sudo pamac install texstudio} at the command line.
 See more information in the Manjaro page  \href{https://software.manjaro.org/package/texstudio}{\TeX{}Studio Manjaro}.
 
 
 \section{Calibre}
 
-Followed the download and installation instructions in \href{https://calibre-ebook.com/download_linux}{Calibre}.
+I followed the download and installation instructions in \href{https://calibre-ebook.com/download_linux}{Calibre}.
 
 \begin{footnotesize}
 \begin{verbatim}
