@@ -374,7 +374,7 @@ Then I linked it to my free account which allows only three devices.
 \end{compactenum}
 
 
-\section{\TeX{}Studio}
+\section[TeXStudio]{\TeX{}Studio}
 
 I ran \texttt{sudo pamac install texstudio} at the command line.
 See more information in the Manjaro page  \href{https://software.manjaro.org/package/texstudio}{\TeX{}Studio Manjaro}.
@@ -389,6 +389,35 @@ I followed the download and installation instructions in \href{https://calibre-e
 	sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
 \end{verbatim}
 \end{footnotesize}
+
+
+\section[Overleaf]{Overleaf}
+\label{sec:overleaf}
+
+I started using the Git integration by creating a project in Overleaf called manjaro-log, then setting it as a second remote on my local repo via the following commands:
+
+\begin{verbatim}
+    git remote add overleaf https://git@git.overleaf.com/66b917d85aa240cb346a737b
+    git checkout master
+    git pull overleaf master --allow-unrelated-histories --rebase=false
+\end{verbatim}
+
+After this, I was able to pull from it every time I make changes in Overleaf via:
+
+\begin{verbatim}
+    git pull overleaf master
+\end{verbatim}
+
+And to replicate those changes to GitHub via:
+
+\begin{verbatim}
+    git push origin
+\end{verbatim}
+
+
+GitHub forces to have the branch main as the default, so one has to check out the branch \texttt{master} before pulling from Overleaf. 
+The former only understands linear histories on the branch \texttt{master}.
+The limitations of the git integration are explained in their \href{https://www.overleaf.com/learn/how-to/Git_integration}{integration web page}.  
 
 
 \end{document}
