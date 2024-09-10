@@ -304,6 +304,22 @@ The output was:
 
 This fixed my time zone issue today! Check with the command \texttt{date}.
 
+
+\subsection{Fixing the time}
+
+On Sep 9, 2024 I noticed the times was 6 hours behind for our time zone.
+I simply ran:
+
+\begin{verbatim}
+sudo systemctl status systemd-timesyncd.service
+sudo systemctl restart systemd-timesyncd.service
+
+\end{verbatim}
+
+And the time was syncronized again.
+
+
+
 \section{Dropbox}
 
 I followed the \href{https://forum.manjaro.org/t/dropbox-install-new-to-manjaro/9576/5}{page in Manaro Forum}.
