@@ -392,8 +392,20 @@ Then I linked it to my free account which allows only three devices.
 
 \section[TeXStudio]{\TeX{}Studio}
 
-I ran \texttt{sudo pamac install texstudio} at the command line.
-See more information in the Manjaro page  \href{https://software.manjaro.org/package/texstudio}{\TeX{}Studio Manjaro}.
+\begin{itemize}
+	\item I ran \texttt{sudo pamac install texstudio} at the command line.
+	See more information in the Manjaro page  \href{https://software.manjaro.org/package/texstudio}{\TeX{}Studio Manjaro}.
+	
+	\item \textbf{October 6, 2024} I downloaded  the latest bug fix release from the \href{https://github.com/texstudio-org/texstudio/releases}{Github website}, v4.8.4 under the hyperlink \textsf{\textcolor{blue}{Source code (tar.gz)}}.
+	Then I untarred it with \texttt{tar xvzf texstudio-4.8.4.tar.gz}, cd into the  archive folder and executed \texttt{sudo ./BUILD.SH}. I chose to build a release version and to install in at the default location /texttt{/usr/local/bin}
+	After the current desktop file worked fine because the default paths were also in use by the manjaro distro.
+	Now I have to disable updates from the AUR distro so I keep the version current bu repeating this process whenever necessary.
+	\item \textbf{October 6, 2024} The entry above illustrates a potential good QT/C++ project to learn good practices. When I ran the build script qmake and make were able to use all cores in the laptop and the build took a mere seconds.
+	I removed it using the software updates GUI in the Extra repository.
+\end{itemize}
+
+
+
 
 
 \section{Calibre}
